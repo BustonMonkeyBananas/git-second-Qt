@@ -1,15 +1,14 @@
 import sys
-from PyQt6 import uic
 import random
 from PyQt6.QtWidgets import QMainWindow, QApplication
 from PyQt6.QtCore import QPointF
 from PyQt6.QtGui import QColor, QPainter
+from UI import Ui_Circles
 
-
-class Circles(QMainWindow):
+class Circles(QMainWindow, Ui_Circles):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.qp = QPainter()
         self.flag = False
         self.draw_btn.clicked.connect(self.draw1)
@@ -27,9 +26,10 @@ class Circles(QMainWindow):
 
     def draw(self):
         try:
+            c = [random.randint(0, 255) for _ in range(3)]
             r = random.randint(20, 100)
             x, y = random.randint(20, 800), random.randint(20, 600)
-            self.qp.setBrush(QColor("yellow"))
+            self.qp.setBrush(QColor(*c))
             self.qp.drawEllipse(QPointF(x, y), r, r)
         except Exception as e:
             print(e)
